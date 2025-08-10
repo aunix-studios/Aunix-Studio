@@ -6054,5 +6054,75 @@
             }, true);
         }
     </script>
+
+    <!-- Chat bubble + Chatbase script -->
+    <style>
+      #chatBubble {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: #4A90E2;
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: background-color 0.3s ease;
+      }
+      #chatBubble:hover {
+        background-color: #357ABD;
+      }
+      #chatBubble svg {
+        width: 30px;
+        height: 30px;
+        fill: white;
+      }
+    </style>
+
+    <div id="chatBubble" title="Chat with us">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M2 2v20l4-4h16V2z"></path>
+      </svg>
+    </div>
+
+    <script>
+      (function(){
+        if(!window.chatbase || window.chatbase("getState") !== "initialized"){
+          window.chatbase = (...args) => {
+            if(!window.chatbase.q){window.chatbase.q = [];}
+            window.chatbase.q.push(args);
+          };
+          window.chatbase = new Proxy(window.chatbase, {
+            get(target, prop) {
+              if(prop === "q") return target.q;
+              return (...args) => target(prop, ...args);
+            }
+          });
+          const onLoad = () => {
+            const script = document.createElement("script");
+            script.src = "https://www.chatbase.co/embed.min.js";
+            script.id = "n0DoHo214RdDX2s67atet";
+            script.domain = "www.chatbase.co";
+            document.body.appendChild(script);
+          };
+          if(document.readyState === "complete"){
+            onLoad();
+          } else {
+            window.addEventListener("load", onLoad);
+          }
+        }
+      })();
+
+      document.getElementById("chatBubble").addEventListener("click", () => {
+        if(window.chatbase) {
+          window.chatbase("toggle");
+        }
+      });
+    </script>
+
 </body>
 </html>
