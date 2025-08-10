@@ -6046,7 +6046,7 @@
                 }
             });
 
-            // Handle image load errors
+// Handle image load errors
             document.addEventListener('error', function(e) {
                 if (e.target.tagName === 'IMG') {
                     e.target.style.display = 'none';
@@ -6080,6 +6080,11 @@
         width: 30px;
         height: 30px;
         fill: white;
+      }
+
+      /* Hide Chatbase default chat icon */
+      .chatbase-widget-button {
+        display: none !important;
       }
     </style>
 
